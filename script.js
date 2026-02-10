@@ -335,6 +335,7 @@ function saveScore(name, score, percentage, answers) {
 
     // Send to FormSubmit for easy tracking if email is configured
     if (INSTRUCTOR_EMAIL && INSTRUCTOR_EMAIL !== "YOUR_EMAIL_HERE") {
+        console.log("Attempting to send submission to FormSubmit...");
         sendToFormSubmit({
             student_name: name,
             score: `${score}/${questions.length}`,
@@ -349,7 +350,7 @@ function saveScore(name, score, percentage, answers) {
 
 async function sendToFormSubmit(data) {
     try {
-        await fetch(`https://formsubmit.co/ajax/${INSTRUCTOR_EMAIL}`, {
+        const response = await fetch(`https://formsubmit.co/ajax/${INSTRUCTOR_EMAIL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -357,9 +358,17 @@ async function sendToFormSubmit(data) {
             },
             body: JSON.stringify(data)
         });
-        console.log('Submission sent successfully');
+        const result = await response.json();
+        if (result.success === "true" || response.ok) {
+            console.log('Submission sent successfully!');
+            alert("Results sent to instructor successfully.");
+        } else {
+            console.error('FormSubmit Error:', result);
+            alert("Submission failed. Please check your email address in script.js.");
+        }
     } catch (error) {
-        console.error('Error sending submission:', error);
+        console.error('Network error sending submission:', error);
+        alert("Network error. Make sure you are connected to the internet.");
     }
 }
 
