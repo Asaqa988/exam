@@ -141,7 +141,7 @@ let studentAnswers = []; // Track answers: {questionIndex, selectedOption, isCor
 
 // Constants
 const INSTRUCTOR_PASSCODE = "1234"; // Simple passcode for demo
-const GOOGLE_SCRIPT_URL = ""; // INSERT YOUR GOOGLE APPS SCRIPT URL HERE
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVtRUu4RNrM-hL_E0CMQ1bIHc9Ko-lPvW_urUxEGDXS_-DjvLAwrTghhM4WyIckW4P/exec"; // INSERT YOUR GOOGLE APPS SCRIPT URL HERE
 
 // DOM Elements
 const startScreen = document.getElementById('start-screen');
