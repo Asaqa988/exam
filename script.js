@@ -336,10 +336,10 @@ function saveScore(name, score, percentage, answers) {
     // Send to Google Sheets if URL is configured
     if (GOOGLE_SCRIPT_URL) {
         sendToGoogleSheets({
-            name,
-            score,
-            percentage,
-            status,
+            name: name,
+            score: score,
+            percentage: percentage,
+            status: status,
             answers: JSON.stringify(answers),
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString()
@@ -349,17 +349,15 @@ function saveScore(name, score, percentage, answers) {
 
 async function sendToGoogleSheets(data) {
     try {
+        // We use a simple fetch without custom headers to avoid CORS preflight (OPTIONS) issues
         await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // Essential for Google Apps Script webhooks
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            mode: 'no-cors',
             body: JSON.stringify(data)
         });
-        console.log('Data sent successfully to Google Sheets');
+        console.log('Submission sent to Google Sheets');
     } catch (error) {
-        console.error('Error sending data to Google Sheets:', error);
+        console.error('Network error sending to Google Sheets:', error);
     }
 }
 
