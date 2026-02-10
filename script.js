@@ -141,6 +141,7 @@ let studentAnswers = []; // Track answers: {questionIndex, selectedOption, isCor
 
 // Constants
 const INSTRUCTOR_PASSCODE = "1234"; // Simple passcode for demo
+const GOOGLE_SCRIPT_URL = ""; // INSERT YOUR GOOGLE APPS SCRIPT URL HERE
 
 // DOM Elements
 const startScreen = document.getElementById('start-screen');
@@ -331,6 +332,35 @@ function saveScore(name, score, percentage, answers) {
 
     history.sort((a, b) => b.percentage - a.percentage);
     localStorage.setItem('qa_exam_results', JSON.stringify(history));
+
+    // Send to Google Sheets if URL is configured
+    if (GOOGLE_SCRIPT_URL) {
+        sendToGoogleSheets({
+            name,
+            score,
+            percentage,
+            status,
+            answers: JSON.stringify(answers),
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString()
+        });
+    }
+}
+
+async function sendToGoogleSheets(data) {
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Essential for Google Apps Script webhooks
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        console.log('Data sent successfully to Google Sheets');
+    } catch (error) {
+        console.error('Error sending data to Google Sheets:', error);
+    }
 }
 
 function updateLeaderboard() {
