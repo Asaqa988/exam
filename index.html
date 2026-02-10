@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Professional Exam Portal</title>
+    <meta name="description"
+        content="A professional interactive exam platform for Quality Assurance students covering Manual and Automation testing.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="glass-container" id="app">
+        <!-- Start Screen -->
+        <section id="start-screen" class="screen active">
+            <h1 class="gradient-text">QA Professional Exam</h1>
+            <p class="subtitle">Manual Testing & Selenium Automation</p>
+
+            <div class="registration-form">
+                <label for="student-name">Enter Your Full Name</label>
+                <input type="text" id="student-name" placeholder="John Doe" autocomplete="off">
+                <p id="name-error" class="error-text">Please enter your name to proceed.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-item">
+                    <span class="label">Questions</span>
+                    <span class="value" id="total-questions-count">26</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Pass Mark</span>
+                    <span class="value">70%</span>
+                </div>
+            </div>
+            <button id="start-btn" class="btn primary">Start Examination</button>
+            <button id="instructor-access-btn" class="link-btn">Instructor Portal</button>
+        </section>
+
+        <!-- Instructor Login Screen -->
+        <section id="instructor-login-screen" class="screen">
+            <h2 class="gradient-text">Instructor Access</h2>
+            <div class="registration-form">
+                <label for="instructor-passcode">Enter Instructor Passcode</label>
+                <input type="password" id="instructor-passcode" placeholder="••••" autocomplete="off">
+                <p id="passcode-error" class="error-text">Incorrect passcode.</p>
+            </div>
+            <div class="action-buttons">
+                <button id="login-btn" class="btn primary">Login</button>
+                <button id="back-to-start-btn" class="btn secondary">Back</button>
+            </div>
+        </section>
+
+        <!-- Instructor Dashboard Screen -->
+        <section id="instructor-dashboard-screen" class="screen">
+            <h2 class="gradient-text">Instructor Dashboard</h2>
+            <div class="leaderboard-card full-width">
+                <div class="header-with-actions">
+                    <h3>Student Results History</h3>
+                    <div class="action-group">
+                        <button id="export-btn" class="btn primary mini">Export to Excel (CSV)</button>
+                        <button id="clear-data-btn" class="btn secondary mini">Clear History</button>
+                    </div>
+                </div>
+                <div class="table-wrapper tall">
+                    <table id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                                <th>Percentage</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Scores will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button id="exit-dashboard-btn" class="btn secondary">Exit Dashboard</button>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="screen">
+            <header class="quiz-header">
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span id="student-display-name">Student: </span>
+                        <span id="timer">00:00</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                    </div>
+                    <div class="question-tracker" id="question-number">Question 1 of 26</div>
+                </div>
+            </header>
+
+            <div class="question-container">
+                <h2 id="question-text">Question content goes here?</h2>
+                <div id="options-container" class="options-grid">
+                    <!-- Options will be injected here -->
+                </div>
+            </div>
+
+            <footer class="quiz-footer">
+                <button id="next-btn" class="btn secondary" disabled>Next Question</button>
+            </footer>
+        </section>
+
+        <!-- Result Screen -->
+        <section id="result-screen" class="screen">
+            <h2 class="gradient-text">Examination Completed</h2>
+            <p class="congrats-text" id="congrats-name">Well done, Student!</p>
+
+            <div class="score-card-single">
+                <div class="score-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path id="circle-stroke" class="circle" stroke-dasharray="0, 100"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="score-percentage">0%</text>
+                    </svg>
+                </div>
+                <p class="final-score">Score: <span id="correct-answers">0</span> / <span
+                        id="total-questions-final">26</span></p>
+                <p id="result-message" class="result-message"></p>
+            </div>
+
+            <div class="action-buttons">
+                <!-- Retry Exam button removed as per instructor request -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
