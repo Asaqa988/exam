@@ -141,7 +141,7 @@ let studentAnswers = []; // Track answers: {questionIndex, selectedOption, isCor
 
 // Constants
 const INSTRUCTOR_PASSCODE = "1234"; // Simple passcode for demo
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbBIIRnsbx4stZHv4bo7CFh9UKOSDcaGX3Dxwe--Lm3-1xhGUilwNlAbyGO4scJA6w/exec"; // INSERT YOUR GOOGLE APPS SCRIPT URL HERE
+const INSTRUCTOR_EMAIL = "YOUR_EMAIL_HERE"; // INSERT YOUR EMAIL HERE
 
 // DOM Elements
 const startScreen = document.getElementById('start-screen');
@@ -333,31 +333,33 @@ function saveScore(name, score, percentage, answers) {
     history.sort((a, b) => b.percentage - a.percentage);
     localStorage.setItem('qa_exam_results', JSON.stringify(history));
 
-    // Send to Google Sheets if URL is configured
-    if (GOOGLE_SCRIPT_URL) {
-        sendToGoogleSheets({
-            name: name,
-            score: score,
-            percentage: percentage,
+    // Send to FormSubmit for easy tracking if email is configured
+    if (INSTRUCTOR_EMAIL && INSTRUCTOR_EMAIL !== "YOUR_EMAIL_HERE") {
+        sendToFormSubmit({
+            student_name: name,
+            score: `${score}/${questions.length}`,
+            percentage: `${percentage}%`,
             status: status,
-            answers: JSON.stringify(answers),
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString()
+            submission_date: new Date().toLocaleDateString(),
+            submission_time: new Date().toLocaleTimeString(),
+            _subject: `Exam Submission: ${name} (${percentage}%)`
         });
     }
 }
 
-async function sendToGoogleSheets(data) {
+async function sendToFormSubmit(data) {
     try {
-        // We use a simple fetch without custom headers to avoid CORS preflight (OPTIONS) issues
-        await fetch(GOOGLE_SCRIPT_URL, {
+        await fetch(`https://formsubmit.co/ajax/${INSTRUCTOR_EMAIL}`, {
             method: 'POST',
-            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(data)
         });
-        console.log('Submission sent to Google Sheets');
+        console.log('Submission sent successfully');
     } catch (error) {
-        console.error('Network error sending to Google Sheets:', error);
+        console.error('Error sending submission:', error);
     }
 }
 
