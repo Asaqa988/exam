@@ -141,7 +141,7 @@ let studentAnswers = []; // Track answers: {questionIndex, selectedOption, isCor
 
 // Constants
 const INSTRUCTOR_PASSCODE = "1234"; // Simple passcode for demo
-const INSTRUCTOR_EMAIL = "YOUR_EMAIL_HERE"; // INSERT YOUR EMAIL HERE
+const INSTRUCTOR_EMAIL = "asaqa0010@gmail.com"; // INSERT YOUR EMAIL HERE
 
 // DOM Elements
 const startScreen = document.getElementById('start-screen');
